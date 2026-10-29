@@ -24,3 +24,4 @@ fix_1_license.sh
 fix_2_cli.sh
 fix_3_cleanup.sh
 audit.sh
+daily_report.sh
