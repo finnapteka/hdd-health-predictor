@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hdd-health-predictor"
+version = "1.0.0"
+description = "Predictive HDD failure monitor for Linux (spindle/actuator degradation)"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [{name = "SMarsh"}]
+keywords = ["smart", "hdd", "predictive", "systemd", "monitoring"]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Topic :: System :: Hardware",
+    "Topic :: System :: Monitoring",
+]
+dependencies = ["PyYAML>=6.0"]
+
+[project.optional-dependencies]
+fast = ["numpy>=1.21", "scipy>=1.7"]
+dev  = ["pytest>=7"]
+
+[project.scripts]
+hdd-health-predictor = "src.hdd_parser:main"
+hdd-trend-analyzer   = "src.trend_analyzer:main"
+
+[tool.setuptools.packages.find]
+include = ["src*"]

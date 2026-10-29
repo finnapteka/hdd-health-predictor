@@ -1,0 +1,28 @@
+[Unit]
+Description=HDD Health Predictor (predictive SMART analyzer)
+Documentation=https://github.com/finnapteka/hdd-health-predictor
+After=local-fs.target
+
+[Service]
+Type=oneshot
+User=root
+# Hardening — the daemon only needs to read SMART and write to /var/log/hdd_pre_fail
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ReadWritePaths=/var/log/hdd_pre_fail
+Nice=19
+IOSchedulingClass=idle
+MemoryMax=256M
+CPUQuota=25%
+
+# Pass desktop env so notify-send works from the service
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/sss/.Xauthority
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+
+ExecStart=/opt/hdd-health-predictor/venv/bin/python /opt/hdd-health-predictor/src/hdd_parser.py --config /opt/hdd-health-predictor/config.yaml
+
+[Install]
+WantedBy=multi-user.target

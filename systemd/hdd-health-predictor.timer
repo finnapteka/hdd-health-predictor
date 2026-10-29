@@ -1,0 +1,12 @@
+[Unit]
+Description=Run HDD Health Predictor hourly
+Documentation=https://github.com/finnapteka/hdd-health-predictor
+
+[Timer]
+OnCalendar=hourly
+AccuracySec=1min
+Persistent=true
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target

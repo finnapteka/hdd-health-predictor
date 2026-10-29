@@ -1,0 +1,34 @@
+# hdd-health-predictor configuration
+# Copy to /opt/hdd-health-predictor/config.yaml and edit.
+#
+# Monitored SMART attributes (whatever the drive actually exposes):
+#   1   Raw_Read_Error_Rate
+#   7   Seek_Error_Rate
+#   11  Calibration_Retry_Count   (WD/Hitachi; usually absent on Seagate)
+#   187 Reported_Uncorrectable    (Seagate)
+#   188 Command_Timeout           (Seagate)
+#   193 Load_Cycle_Count          (head parking wear)
+#   197 Current_Pending_Sector    (early remap signal)
+#   198 Offline_Uncorrectable
+#   240 Head_Flying_Hours
+# Missing attributes are recorded as NULL and skipped in trend analysis.
+
+disks:
+  - /dev/sdc        # Seagate ST2000DL003 (2 TB HDD)
+  - /dev/sdd        # Seagate ST1000VX005 (1 TB HDD)
+  - /dev/sda        # ITMATE R5 128GB (SSD-like, attributes may be absent)
+
+interval_hours: 1
+min_points: 24            # cold start: collect 24 h before alerting
+hi_threshold: 50          # alert if Health Index < 50 %
+alert_cooldown_hours: 6   # anti-spam: same alert suppressed for N hours
+
+# Desktop notification (notify-send). Ignored if user/display are empty.
+notify_user: sss
+notify_display: ":0"
+
+paths:
+  db_path: /var/log/hdd_pre_fail/metrics.db
+  state_path: /var/log/hdd_pre_fail/state.json
+  alerts_log: /var/log/hdd_pre_fail/alerts.log
+  analyzer_log: /var/log/hdd_pre_fail/analyzer.log

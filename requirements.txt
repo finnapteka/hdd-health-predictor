@@ -1,0 +1,6 @@
+# Core: pure Python, no hard dependencies.
+# Optional accelerators — used if installed, silently skipped otherwise:
+numpy>=1.21 ; python_version >= "3.9"
+scipy>=1.7 ; python_version >= "3.9"
+# YAML config (falls back to JSON if PyYAML missing)
+PyYAML>=6.0
